@@ -1,7 +1,7 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
- * @providesModule IMotionVisualizeComponent
+ * @providesModule IMotionVisualComponent
  */
 
  // Resources:
@@ -17,7 +17,6 @@
  const util  = require('util');
  const WebView = require('WebView');
  const resolveAssetSource = require('resolveAssetSource');
- const express = require("express");
 
  const iMD = require('iMotionDebugger');
  const iMM = require('iMotionMath');
@@ -27,9 +26,8 @@
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
 
- var ShareData;
 
- class IMotionVisualizeComponent extends React.Component {
+ class IMotionVisualComponent extends React.Component {
    static propTypes = {
      navigator: React.PropTypes.object.isRequired,
    }
@@ -167,4 +165,4 @@
 
  }
 
- module.exports = IMotionVisualizeComponent;
+ module.exports = IMotionVisualComponent;

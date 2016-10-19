@@ -23,7 +23,7 @@
  const iMM = require('iMotionMath');
  const iMS = require('iMotionSimulation');
  const iMotionConstants = require('iMotionConstants');
- const IMotionVisualizeComponent = require('IMotionVisualizeComponent');
+ const IMotionVisualComponent = require('IMotionVisualComponent');
 
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
@@ -173,7 +173,7 @@
    _visualizeSim(): void {
 
      this.props.navigator.push({
-       component: IMotionVisualizeComponent,
+       component: IMotionVisualComponent,
        translucent: true,
      });
    }
