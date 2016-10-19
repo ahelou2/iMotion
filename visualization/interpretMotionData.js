@@ -95,7 +95,14 @@ function animate() {
 
 function render() {
 
-  var transformMat = getData();
+  getDataFromFile();
+
+  var transformMat;
+  if (transform4DMat != null) {
+    transformMat = transform4DMat;
+  } else {
+    transformMat = new three.Matrix4();
+  }
 
   box.matrixWorld = transformMat;
 
@@ -122,8 +129,9 @@ var readStream ;
 var lineByLineDataArr ;
 var dataIdx ;
 var numIter;
+var transform4DMat;
 
-function getData() {
+function getDataFromFile() {
 
   if (readStream == null) {
     readStream = fs.readFileSync('/Users/akram/iMotion/visualization/DATA/test.txt', 'utf8');
@@ -143,6 +151,27 @@ function getData() {
   }
 
   let line = lineByLineDataArr[dataIdx];
+  transform4DMat = interpretData(line);
+
+    if (numIter >= 20) {
+      dataIdx++;
+      numIter = 0;
+    }
+    numIter++;
+
+  }
+
+};
+
+function getDataFromStdin() {
+  process.stdin.resume();
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', function(data) {
+    transform4DMat = interpretData(data);
+  });
+}
+
+function interpretData(line) {
   let timestampIdx = line.indexOf(DATA_KEYS.timestamp);
   if (timestampIdx !== -1) {
     let positionIdx = line.indexOf(DATA_KEYS.position);
@@ -193,13 +222,5 @@ function getData() {
     transform4DMat.fromArray(transform4DArr);
     transform4DMat.setPosition(positionVec);
 
-    if (numIter >= 20) {
-      dataIdx++;
-      numIter = 0;
-    }
-    numIter++;
-
     return transform4DMat;
-  }
-
-};
+}

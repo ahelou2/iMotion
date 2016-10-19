@@ -110,6 +110,7 @@
    }
 
    async _primeMotionSim(): void {
+    //  console.log("PRIMING");
      await Motion.startMotionUpdates();
      while (await this._initMotionSimPromise()) {
      }
@@ -150,6 +151,7 @@
        passProps: {
          source: {
            uri: 'https://threejs.org/examples/#webgl_geometries'
+          // uri: 'file:///Users/akram/iMotion/visualization/visualize.html'
          },
        },
        translucent: true,
@@ -193,6 +195,7 @@
            // write the file
            RNFS.appendFile(this.utilState.writeFilePath, data, 'utf8')
            .then((success) => {
+             console.log(data);
            })
            .catch((err) => {
              console.log(err.message);
