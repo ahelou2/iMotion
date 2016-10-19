@@ -18,8 +18,15 @@
   "devDependencies": {
     "babel-jest": "16.0.0",
     "babel-preset-react-native": "1.9.0",
+    "brfs": "^1.4.3",
+    "browserify-fs": "^1.0.0",
+    "fs-extra": "^0.30.0",
+    "graceful-fs": "^4.1.9",
     "jest": "16.0.1",
     "jest-react-native": "16.0.0",
-    "react-test-renderer": "15.3.2"
+    "react-test-renderer": "15.3.2",
+    "readline-browserify": "0.0.4",
+    "readline-sync": "^1.4.4",
+    "three": "^0.81.2"
   }
 }

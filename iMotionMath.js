@@ -3,9 +3,10 @@
 *
 * @providesModule iMotionMath
 */
+"use strict";
 
 const iMN = require('./iMotionNumeric.js');
-const iMC = require('iMotionConstants');
+const iMC = require('./iMotionConstants.js');
 
 var iMotionMath =  {
 
