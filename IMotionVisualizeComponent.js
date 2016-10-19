@@ -1,7 +1,7 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
- * @providesModule IMotionControlComponent
+ * @providesModule IMotionVisualizeComponent
  */
 
  // Resources:
@@ -14,57 +14,29 @@
  const Text = require('Text');
  const TouchableWithoutFeedback = require('TouchableWithoutFeedback');
  const View = require('View');
- const RNFS = require('react-native-fs');
  const util  = require('util');
  const WebView = require('WebView');
  const resolveAssetSource = require('resolveAssetSource');
+ const express = require("express");
 
  const iMD = require('iMotionDebugger');
  const iMM = require('iMotionMath');
  const iMS = require('iMotionSimulation');
  const iMotionConstants = require('iMotionConstants');
- const IMotionVisualizeComponent = require('IMotionVisualizeComponent');
 
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
 
-//  const ws = new WebSocket('ws://localhost:3000');
-//
-//  ws.onopen = () => {
-//   // connection opened
-//
-//   ws.send('something'); // send a message
-// };
-//
-// ws.onmessage = (e) => {
-//   // a message was received
-//   console.log(e.data);
-// };
-//
-// ws.onerror = (e) => {
-//   // an error occurred
-//   console.log(e.message);
-// };
-//
-// ws.onclose = (e) => {
-//   // connection closed
-//   console.log(e.code, e.reason);
-// };
+ var ShareData;
 
- class IMotionControlComponent extends React.Component {
+ class IMotionVisualizeComponent extends React.Component {
    static propTypes = {
      navigator: React.PropTypes.object.isRequired,
    }
    constructor(props) {
      super(props);
-     this.state = {
-       distanceText: '',
-     };
 
      let currTimestamp = new Date().getTime() / 1000 ;
-     this.utilState = {
-       writeFilePath: undefined,
-     }
      this._displacementSimulationObject = new iMS(3, [1,1,1], true);
    }
 
@@ -73,41 +45,12 @@
    }
 
    render() {
-     const display = 'Distance from Origin:\n' + this.state.distanceText;
+     var htmlUri = resolveAssetSource(require('./visualization/visualize.html'));
      return (
-       <View style={{top: 50}}>
-
-         <TouchableWithoutFeedback key={'start'} onPress={this._primeMotionSim.bind(this)}>
-           <View style={[styles.buttons, {backgroundColor: 'green'}]}>
-             <Text style={[styles.text]}>
-               Start Simulation
-             </Text>
-           </View>
-         </TouchableWithoutFeedback>
-
-         <TouchableWithoutFeedback key={'stop'} onPress={this._stopSimulation.bind(this)}>
-           <View style={[styles.buttons, {backgroundColor: 'red'}]}>
-             <Text style={[styles.text]}>
-               Stop Simulation
-             </Text>
-           </View>
-         </TouchableWithoutFeedback>
-
-         <TouchableWithoutFeedback key={'visualize'} onPress={this._visualizeSim.bind(this)}>
-           <View style={[styles.buttons, {backgroundColor: 'blue'}]}>
-             <Text style={[styles.text]}>
-               Visualize Simulation
-             </Text>
-           </View>
-         </TouchableWithoutFeedback>
-
-         <View key={'display'} style={[styles.displayBox]}>
-           <Text style={[styles.text, {color: 'black'}]}>
-             {display}
-           </Text>
-         </View>
-
-       </View>
+       <WebView
+         source={{uri: htmlUri.uri}}
+         injectedJavaScript='ShareData;'
+       />
      );
    }
 
@@ -170,35 +113,8 @@
      Motion.stopMotionUpdates();
    }
 
-   _visualizeSim(): void {
-
-     this.props.navigator.push({
-       component: IMotionVisualizeComponent,
-       translucent: true,
-     });
-   }
-
    async _driveMotionSimulator(): void {
      try {
-       fetch('host:3000/publishData', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    username: "nraboy",
-			password: "1234",
-			twitter: "@nraboy"
-  })
-}).then((response) => response.json())
-      .then((responseJson) => {
-        return responseJson.movies;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
        const motionStruct = await Motion.getCurrentMotion();
        if (this._displacementSimulationObject != null) {
          const DEBUG_timer_in = new Date().getTime();
@@ -231,15 +147,7 @@
 
            let writeTime = new Date().getTime();
            const data = 'Timestamp: ' + writeTime + ' Position: ' + motionState.position + ' Rotation Matrix: ' + motionState.orientation + '\n';
-
-           // write the file
-          //  RNFS.appendFile(this.utilState.writeFilePath, data, 'utf8')
-          //  .then((success) => {
-          //    console.log(data);
-          //  })
-          //  .catch((err) => {
-          //    console.log(err.message);
-          //  });
+           ShareData = data.slice();
          }
 
          this._driveMotionSimulator();
@@ -259,27 +167,4 @@
 
  }
 
- const styles = StyleSheet.create({
-   buttons: {flex: 1,
-     height: 100,
-     justifyContent: 'center',
-     alignItems: 'center',
-     marginHorizontal: 20,
-     marginVertical: 20,
-   },
-   displayBox: {flex: 1,
-     height: 100,
-     justifyContent: 'center',
-     alignItems: 'center',
-     marginHorizontal: 20,
-     marginVertical: 20,
-   },
-   text: {
-     fontWeight: 'bold',
-     textAlign: 'center',
-     fontSize: 20,
-     color: 'white',
-   },
- });
-
- module.exports = IMotionControlComponent;
+ module.exports = IMotionVisualizeComponent;

@@ -95,8 +95,9 @@ function animate() {
 
 function render() {
 
-  getDataFromFile();
-
+  // getDataFromFile();
+  // sendData is a global variable injected by IMotionControlComponent
+  transform4DMat = ShareData;
   var transformMat;
   if (transform4DMat != null) {
     transformMat = transform4DMat;
@@ -153,15 +154,14 @@ function getDataFromFile() {
   let line = lineByLineDataArr[dataIdx];
   transform4DMat = interpretData(line);
 
-    if (numIter >= 20) {
-      dataIdx++;
-      numIter = 0;
-    }
-    numIter++;
-
+  if (numIter >= 20) {
+    dataIdx++;
+    numIter = 0;
   }
+  numIter++;
 
-};
+}
+
 
 function getDataFromStdin() {
   process.stdin.resume();
@@ -217,6 +217,7 @@ function interpretData(line) {
         transform4DArr[i] = 1;
       }
     }
+  }
 
     let transform4DMat = new three.Matrix4();
     transform4DMat.fromArray(transform4DArr);
