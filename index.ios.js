@@ -14,8 +14,7 @@ const StyleSheet = require('StyleSheet');
 const Text = require('Text');
 const TouchableWithoutFeedback = require('TouchableWithoutFeedback');
 const View = require('View');
-const NavIOS = require('NavigatorIOS');
-const WebView = require('WebView');
+const NavigatorIOS = require('NavigatorIOS');
 
 const IMotionControlComponent = require('IMotionControlComponent');
 
@@ -23,25 +22,13 @@ class iMotion extends React.Component {
 
   render() {
     return (
-      <Navigator
-      initialRoute={{ title: 'Simulator Control Scene', index: 0 }}
-      renderScene={(route, navigator) => {
-        if (route.index === 0) {
-          return <IMotionControlComponent
-            onVisualizeSim = { () => {
-              const nextIndex = route.index + 1;
-              navigator.push({
-                title: 'Simulator Visualization ',
-                index: nextIndex,
-              });
-            }}
-          />
-        } else if (route.index === 1) {
-          return <WebView
-            source={{uri: 'https://threejs.org/examples/#webgl_geometries'}}
-          />
-        }
-      }}
+      <NavigatorIOS
+        initialRoute={{
+          component: IMotionControlComponent,
+          title: 'Simulator Controls',
+          translucent: true,
+        }}
+        style={{flex: 1}}
       />
     );
   }

@@ -16,7 +16,7 @@
  const View = require('View');
  const RNFS = require('react-native-fs');
  const util  = require('util');
- // const PropTypes = require('PropTypes');
+ const WebView = require('WebView');
 
  const iMD = require('iMotionDebugger');
  const iMM = require('iMotionMath');
@@ -28,7 +28,7 @@
 
  class IMotionControlComponent extends React.Component {
    static propTypes = {
-     onVisualizeSim: React.PropTypes.func.isRequired,
+     navigator: React.PropTypes.object.isRequired,
    }
    constructor(props) {
      super(props);
@@ -50,7 +50,7 @@
    render() {
      const display = 'Distance from Origin:\n' + this.state.distanceText;
      return (
-       <View style= {{top: 30}}>
+       <View style={{top: 50}}>
 
          <TouchableWithoutFeedback key={'start'} onPress={this._primeMotionSim.bind(this)}>
            <View style={[styles.buttons, {backgroundColor: 'green'}]}>
@@ -77,7 +77,7 @@
          </TouchableWithoutFeedback>
 
          <View key={'display'} style={[styles.displayBox]}>
-           <Text style={[styles.text]}>
+           <Text style={[styles.text, {color: 'black'}]}>
              {display}
            </Text>
          </View>
@@ -145,7 +145,15 @@
    }
 
    _visualizeSim(): void {
-     this.props.onVisualizeSim();
+     this.props.navigator.push({
+       component: WebView,
+       passProps: {
+         source: {
+           uri: 'https://threejs.org/examples/#webgl_geometries'
+         },
+       },
+       translucent: true,
+     });
    }
 
    async _driveMotionSimulator(): void {
@@ -227,6 +235,7 @@
      fontWeight: 'bold',
      textAlign: 'center',
      fontSize: 20,
+     color: 'white',
    },
  });
 
