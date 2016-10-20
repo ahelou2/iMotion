@@ -28,28 +28,6 @@
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
 
-//  const ws = new WebSocket('ws://localhost:3000');
-//
-//  ws.onopen = () => {
-//   // connection opened
-//
-//   ws.send('something'); // send a message
-// };
-//
-// ws.onmessage = (e) => {
-//   // a message was received
-//   console.log(e.data);
-// };
-//
-// ws.onerror = (e) => {
-//   // an error occurred
-//   console.log(e.message);
-// };
-//
-// ws.onclose = (e) => {
-//   // connection closed
-//   console.log(e.code, e.reason);
-// };
 
  class IMotionControlComponent extends React.Component {
    static propTypes = {
@@ -66,6 +44,25 @@
        writeFilePath: undefined,
      }
      this._displacementSimulationObject = new iMS(3, [1,1,1], true);
+
+     fetch('http://192.168.1.33:3000/publishData', {
+method: 'POST',
+headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+},
+body: JSON.stringify({
+  "username": "nraboy",
+    "password": "1234",
+    "twitter": "@nraboy"
+})
+}).then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
    }
 
    componentWillUnmount(): void {
@@ -180,24 +177,24 @@
 
    async _driveMotionSimulator(): void {
      try {
-       fetch('host:3000/publishData', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    username: "nraboy",
-			password: "1234",
-			twitter: "@nraboy"
-  })
-}).then((response) => response.json())
-      .then((responseJson) => {
-        return responseJson.movies;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+//        fetch('http://localhost:3000/publishData', {
+//   method: 'POST',
+//   // headers: {
+//   //   'Accept': 'application/json',
+//   //   'Content-Type': 'application/json',
+//   // },
+//   body: JSON.stringify({
+//     username: "nraboy",
+// 			password: "1234",
+// 			twitter: "@nraboy"
+//   })
+// }).then((response) => response.json())
+//       .then((responseJson) => {
+//         console.log(responseJson);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
 
        const motionStruct = await Motion.getCurrentMotion();
        if (this._displacementSimulationObject != null) {
