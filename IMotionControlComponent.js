@@ -44,25 +44,6 @@
        writeFilePath: undefined,
      }
      this._displacementSimulationObject = new iMS(3, [1,1,1], true);
-
-     fetch('http://192.168.1.33:3000/publishData', {
-method: 'POST',
-headers: {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json',
-},
-body: JSON.stringify({
-  "username": "nraboy",
-    "password": "1234",
-    "twitter": "@nraboy"
-})
-}).then((response) => response.json())
-    .then((responseJson) => {
-      console.log(responseJson);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
    }
 
    componentWillUnmount(): void {
@@ -175,26 +156,47 @@ body: JSON.stringify({
      });
    }
 
+   var buffer;
+   _publishData(data): void {
+
+     if (buffer == null) {
+       buffer = {
+         capacity: 100,
+         store: new Array(this.capacity),
+         writeIdx: 0,
+         readIdx: 0,
+       }
+     }
+
+     if (buffer.writeIdx === buffer.capacity) {
+       buffer.writeIdx = 0;
+       var payload: JSON.stringify(buffer.store);
+       fetch('http://192.168.1.33:3000/publishMotionData', {
+         method: 'POST',
+         headers: {
+           'Accept': 'application/json',
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+           "motionData": payload,
+         })
+       }).then((response) => response.json())
+       .then((responseJson) => {
+         console.log(responseJson);
+       })
+       .catch((error) => {
+         console.error(error);
+       });
+     } else {
+       buffer.store[buffer.writeIdx] = data;
+       buffer.writeIdx = buffer.writeIdx + 1;
+     }
+     
+   }
+
+
    async _driveMotionSimulator(): void {
      try {
-//        fetch('http://localhost:3000/publishData', {
-//   method: 'POST',
-//   // headers: {
-//   //   'Accept': 'application/json',
-//   //   'Content-Type': 'application/json',
-//   // },
-//   body: JSON.stringify({
-//     username: "nraboy",
-// 			password: "1234",
-// 			twitter: "@nraboy"
-//   })
-// }).then((response) => response.json())
-//       .then((responseJson) => {
-//         console.log(responseJson);
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
 
        const motionStruct = await Motion.getCurrentMotion();
        if (this._displacementSimulationObject != null) {
@@ -229,14 +231,7 @@ body: JSON.stringify({
            let writeTime = new Date().getTime();
            const data = 'Timestamp: ' + writeTime + ' Position: ' + motionState.position + ' Rotation Matrix: ' + motionState.orientation + '\n';
 
-           // write the file
-          //  RNFS.appendFile(this.utilState.writeFilePath, data, 'utf8')
-          //  .then((success) => {
-          //    console.log(data);
-          //  })
-          //  .catch((err) => {
-          //    console.log(err.message);
-          //  });
+           this._publishData(data);
          }
 
          this._driveMotionSimulator();
