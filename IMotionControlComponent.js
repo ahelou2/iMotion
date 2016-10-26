@@ -28,6 +28,9 @@
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
 
+var buffer;
+const bufferCapacity = 100;
+var DEBUG_timer_in;
 
  class IMotionControlComponent extends React.Component {
    static propTypes = {
@@ -156,13 +159,12 @@
      });
    }
 
-   var buffer;
    _publishData(data): void {
 
      if (buffer == null) {
        buffer = {
-         capacity: 100,
-         store: new Array(this.capacity),
+         capacity: bufferCapacity,
+         store: new Array(bufferCapacity),
          writeIdx: 0,
          readIdx: 0,
        }
@@ -170,8 +172,8 @@
 
      if (buffer.writeIdx === buffer.capacity) {
        buffer.writeIdx = 0;
-       var payload: JSON.stringify(buffer.store);
-       fetch('http://192.168.1.33:3000/publishMotionData', {
+       payload = JSON.stringify(buffer.store);
+       fetch('http://192.168.1.73:3000/publishMotionData', {
          method: 'POST',
          headers: {
            'Accept': 'application/json',
@@ -182,7 +184,8 @@
          })
        }).then((response) => response.json())
        .then((responseJson) => {
-         console.log(responseJson);
+        //  console.log("DATA BUFFER FLUSHED");
+        //  console.log(responseJson);
        })
        .catch((error) => {
          console.error(error);
@@ -191,7 +194,7 @@
        buffer.store[buffer.writeIdx] = data;
        buffer.writeIdx = buffer.writeIdx + 1;
      }
-     
+
    }
 
 
@@ -224,13 +227,20 @@
          if (motionState != null) {
            // Do some work
            var DEBUGGER_time_out = new Date().getTime();
-           iMD.reportNow(EventKey.REPORT, 'Single Step Motion Simulation Elapsed Time: ' + (DEBUGGER_time_out - DEBUG_timer_in));
+           if (DEBUG_timer_in != null) {
+             iMD.reportLater(EventKey.REPORT, 'Single Step Motion Simulation Elapsed Time: ' + (DEBUGGER_time_out - DEBUG_timer_in));
+           }
+           DEBUG_timer_in = DEBUGGER_time_out;
            const distanceFromOrigin = iMM.magnitudeFromOrigin(motionState.position);
-           this.setState({distanceText: distanceFromOrigin});
+           // For some reason (prolly bc it forces a re-render) this is very slow
+          //  this.setState({distanceText: distanceFromOrigin});
 
            let writeTime = new Date().getTime();
-           const data = 'Timestamp: ' + writeTime + ' Position: ' + motionState.position + ' Rotation Matrix: ' + motionState.orientation + '\n';
-
+           const data = {
+             timestamp: writeTime,
+             position: motionState.position,
+             rotationMatrix: motionState.orientation,
+           };
            this._publishData(data);
          }
 

@@ -46,7 +46,7 @@ const iMD = require('iMotionDebugger');
 const iMM = require('iMotionMath');
 
 const GRAVITY_ACC = iMC.GRAVITY_ACC;
-const ACC_AVG_WINDOW_LENGTH = 6;
+const ACC_AVG_WINDOW_LENGTH = 2;
 const MIN_ACC_COMPONENT = 0.3;
 const MAX_ACC_COMPONENT = 1.5;
 const MIN_ACC_MAGNITUDE = 1;
@@ -71,7 +71,7 @@ const VARIABLE_MAX_RESISTANCE = 0.7;
 const VARIABLE_MIN_RESISTANCE = 0.9;
 
 // WARNING: STOP_OPPOSING_ACCELERATIONS should be true most of the time
-const STOP_OPPOSING_ACCELERATIONS = true;
+const STOP_OPPOSING_ACCELERATIONS = false;
 const CO_DIRECTIONAL_VECS_ANGLE_TOLERANCE = Math.PI / 8;
 const SIG_MOTION_MAGN_FOR_UPDATING_MOTION_BUCKETS = 2 * MIN_ACC_MAGNITUDE;
 const IGNORE_NON_SIG_MOTION_FOR_MOTION_BUCKETS = true;
@@ -533,16 +533,16 @@ iMotionSimulation.prototype.isPhoneOnFlatSurface = function(currGravityVector) {
 
 		var iterativeMotionCorrection = (lastAcc, acceleration, lastRotMat, rotationMatrix) => {
 
-			for (let i = 0; i < 20; i++) {
+			for (let i = 0; i < 2; i++) {
 
 				if (iMM.magnitudeFromOrigin(lastAcc) > iMC.EPSILON && iMM.magnitudeFromOrigin(acceleration) > iMC.EPSILON) {
 
 					var predictedRotMatChange = iMM.rotationMatrixTransformAroundUnitAxis(lastAcc, acceleration);
 					var predictedRotMatAbsolute = iMM.multiplyMatrices(lastRotMat, predictedRotMatChange);
-					iMD.reportNow(EventKey.REPORT, 'PREDICTED rotation matrix:\n' + iMM.matrixAsString(predictedRotMatAbsolute));
-					iMD.reportNow(EventKey.REPORT, 'PREDICTED acceleration based on predicted rotation matrix:\n' + iMM.multiplyMatrixByVector(predictedRotMatChange, lastAcc));
+					iMD.reportLater(EventKey.REPORT, 'PREDICTED rotation matrix:\n' + iMM.matrixAsString(predictedRotMatAbsolute));
+					iMD.reportLater(EventKey.REPORT, 'PREDICTED acceleration based on predicted rotation matrix:\n' + iMM.multiplyMatrixByVector(predictedRotMatChange, lastAcc));
 					let avgTheseRotMat = [];
-					for (let j = 0; j < 9; j++) {
+					for (let j = 0; j < 5; j++) {
 						avgTheseRotMat.push(rotationMatrix);
 					}
 					avgTheseRotMat.push(predictedRotMatAbsolute);
@@ -550,10 +550,10 @@ iMotionSimulation.prototype.isPhoneOnFlatSurface = function(currGravityVector) {
 				}
 
 				if (lastAcc != null && iMM.magnitudeFromOrigin(lastAcc) > iMC.EPSILON && lastRotMat != null) {
-					iMD.reportNow(EventKey.REPORT, 'PREVIOUS acc: ' + lastAcc);
-					iMD.reportNow(EventKey.REPORT, 'CURRENT acc: ' + acceleration);
-					iMD.reportNow(EventKey.REPORT, 'PREVIOUS rotation matrix:\n' + iMM.matrixAsString(lastRotMat));
-					iMD.reportNow(EventKey.REPORT, 'CURRENT rotation matrix:\n' + iMM.matrixAsString(rotationMatrix));
+					iMD.reportLater(EventKey.REPORT, 'PREVIOUS acc: ' + lastAcc);
+					iMD.reportLater(EventKey.REPORT, 'CURRENT acc: ' + acceleration);
+					iMD.reportLater(EventKey.REPORT, 'PREVIOUS rotation matrix:\n' + iMM.matrixAsString(lastRotMat));
+					iMD.reportLater(EventKey.REPORT, 'CURRENT rotation matrix:\n' + iMM.matrixAsString(rotationMatrix));
 
 					// Save in order to restore magnitude of corrected acceleration
 					var accMag = iMM.magnitudeFromOrigin(acceleration);
@@ -565,11 +565,11 @@ iMotionSimulation.prototype.isPhoneOnFlatSurface = function(currGravityVector) {
 
 					// Correct acceleration based on prediction
 					const numDim = acceleration.length;
-					const correction = iMM.multiplyVector(predictedAcc, Array(numDim).fill(0.1));
+					const correction = iMM.multiplyVector(predictedAcc, Array(numDim).fill(0.3));
 					acceleration = iMM.addVectors(normalizedAcc, correction);
 					acceleration = iMM.normalizeVector(acceleration);
 					acceleration = iMM.multiplyVector(acceleration, Array(numDim).fill(accMag));
-					iMD.reportNow(EventKey.REPORT, 'CORRECTED acc: ' + acceleration);
+					iMD.reportLater(EventKey.REPORT, 'CORRECTED acc: ' + acceleration);
 				}
 			}
 		};
@@ -709,8 +709,8 @@ iMotionSimulation.prototype.isPhoneOnFlatSurface = function(currGravityVector) {
 			iMD.reportLater(EventKey.REPORT_LATER, 'lastDispVecAfter ' + this.motionState.lastDispVec);
 			var originVec = Array(3).fill(0);
 			var dispMag = iMM.magnitude(originVec, this.motionState.lastDispVec);
-			iMD.reportNow(EventKey.REPORT, 'sampleInterval in seconds: ' + this.motionState.sampleInterval);
-			iMD.reportNow(EventKey.REPORT, 'iMM.magnitude of displacement ' + dispMag);
+			iMD.reportLater(EventKey.REPORT, 'sampleInterval in seconds: ' + this.motionState.sampleInterval);
+			iMD.reportLater(EventKey.REPORT, 'iMM.magnitude of displacement ' + dispMag);
 
 			// Reset this.motionState.sampleInterval in preperation for the next round
 			this.motionState.sampleInterval = 0;
