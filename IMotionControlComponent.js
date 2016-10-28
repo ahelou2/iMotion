@@ -14,7 +14,7 @@
  const Text = require('Text');
  const TouchableWithoutFeedback = require('TouchableWithoutFeedback');
  const View = require('View');
- const RNFS = require('react-native-fs');
+ // const RNFS = require('react-native-fs');
  const util  = require('util');
  const WebView = require('WebView');
  const resolveAssetSource = require('resolveAssetSource');
@@ -24,6 +24,7 @@
  const iMS = require('iMotionSimulation');
  const iMotionConstants = require('iMotionConstants');
  const IMotionVisualComponent = require('IMotionVisualComponent');
+ const IMotionARComponent = require('IMotionARComponent');
 
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
@@ -82,6 +83,14 @@ var DEBUG_timer_in;
            </View>
          </TouchableWithoutFeedback>
 
+         <TouchableWithoutFeedback key={'AR'} onPress={this._enhanceReality.bind(this)}>
+           <View style={[styles.buttons, {backgroundColor: 'yellow'}]}>
+             <Text style={[styles.text]}>
+               Enhance Reality
+             </Text>
+           </View>
+         </TouchableWithoutFeedback>
+
          <View key={'display'} style={[styles.displayBox]}>
            <Text style={[styles.text, {color: 'black'}]}>
              {display}
@@ -121,16 +130,16 @@ var DEBUG_timer_in;
      while (await this._initMotionSimPromise()) {
      }
 
-     let filePrefix = Math.floor(new Date().getTime() / 1000);
-     // create a path you want to write to
-     this.utilState.writeFilePath = RNFS.DocumentDirectoryPath + '/' + filePrefix + '_motion.txt';
-     // write the file
-     RNFS.writeFile(this.utilState.writeFilePath, "MOTION DATA\n", 'utf8')
-     .then((success) => {
-     })
-     .catch((err) => {
-       console.log(err.message);
-     });
+    //  let filePrefix = Math.floor(new Date().getTime() / 1000);
+    //  // create a path you want to write to
+    //  this.utilState.writeFilePath = RNFS.DocumentDirectoryPath + '/' + filePrefix + '_motion.txt';
+    //  // write the file
+    //  RNFS.writeFile(this.utilState.writeFilePath, "MOTION DATA\n", 'utf8')
+    //  .then((success) => {
+    //  })
+    //  .catch((err) => {
+    //    console.log(err.message);
+    //  });
 
      this._driveMotionSimulator();
    }
@@ -157,6 +166,14 @@ var DEBUG_timer_in;
        component: IMotionVisualComponent,
        translucent: true,
      });
+   }
+
+   _enhanceReality(): void {
+
+    //  this.props.navigator.push({
+    //    component: IMotionARComponent,
+    //    translucent: true,
+    //  });
    }
 
    _publishData(data): void {
