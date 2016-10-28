@@ -170,10 +170,10 @@ var DEBUG_timer_in;
 
    _enhanceReality(): void {
 
-    //  this.props.navigator.push({
-    //    component: IMotionARComponent,
-    //    translucent: true,
-    //  });
+     this.props.navigator.push({
+       component: IMotionARComponent,
+       translucent: true,
+     });
    }
 
    _publishData(data): void {
@@ -190,7 +190,8 @@ var DEBUG_timer_in;
      if (buffer.writeIdx === buffer.capacity) {
        buffer.writeIdx = 0;
        payload = JSON.stringify(buffer.store);
-       fetch('http://192.168.1.73:3000/publishMotionData', {
+      //  fetch('http://192.168.1.73:3000/publishMotionData', {
+        fetch('http://172.20.10.2:3000/publishMotionData', {
          method: 'POST',
          headers: {
            'Accept': 'application/json',
