@@ -84,7 +84,7 @@ var DEBUG_timer_in;
          </TouchableWithoutFeedback>
 
          <TouchableWithoutFeedback key={'AR'} onPress={this._enhanceReality.bind(this)}>
-           <View style={[styles.buttons, {backgroundColor: 'yellow'}]}>
+           <View style={[styles.buttons, {backgroundColor: 'purple'}]}>
              <Text style={[styles.text]}>
                Enhance Reality
              </Text>
@@ -191,7 +191,8 @@ var DEBUG_timer_in;
        buffer.writeIdx = 0;
        payload = JSON.stringify(buffer.store);
       //  fetch('http://192.168.1.73:3000/publishMotionData', {
-        fetch('http://172.20.10.2:3000/publishMotionData', {
+      let uri = "http://" + localhost + ":3000/publishMotionData";
+        fetch(uri, {
          method: 'POST',
          headers: {
            'Accept': 'application/json',
