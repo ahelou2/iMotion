@@ -99,7 +99,9 @@ export default class IMotionARComponent extends Component {
 //   }
 
 renderARView(parentHeight, parentWidth) {
+
   var absoluteUri = "http://" + localhost + ":3000/visualizeMobile.html";
+
   return (
 
         <WebView
