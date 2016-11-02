@@ -25,6 +25,7 @@
 
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
+ const localhost = iMotionConstants.localhost;
 
 
  class IMotionVisualComponent extends React.Component {
@@ -43,11 +44,12 @@
    }
 
    render() {
-     var htmlUri = resolveAssetSource(require('./visualization/visualize.html'));
+    //  var htmlUri = resolveAssetSource(require('./visualization/visualize.html'));
+     var absoluteUri = "http://" + localhost + ":3000/visualize.html";
      return (
        <WebView
-         source={{uri: htmlUri.uri}}
-         injectedJavaScript='ShareData;'
+        //  source={{uri: htmlUri.uri}}
+        source={{uri: absoluteUri}}
        />
      );
    }
