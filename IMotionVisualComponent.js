@@ -45,7 +45,8 @@
 
    render() {
     //  var htmlUri = resolveAssetSource(require('./visualization/visualize.html'));
-     var absoluteUri = "http://" + localhost + ":3000/visualize.html";
+    //  var absoluteUri = "http://" + localhost + ":3000/visualize.html";
+     var absoluteUri = "http://" + localhost + ":3000/ARDemo.html";
      return (
        <WebView
         //  source={{uri: htmlUri.uri}}
