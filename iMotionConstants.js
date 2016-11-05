@@ -36,8 +36,8 @@ define('ENABLE_LOGGING', true);
 
 define('EPSILON', 0.001);
 
-define('localhost', "172.20.10.2");
+// define('localhost', "172.20.10.2");
 // define('localhost', "localhost");
-// define('localhost', "192.168.1.11");
+define('localhost', "192.168.1.11");
 
 // module.exports = iMotionConstants;

@@ -28,6 +28,7 @@
 
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
+ const localhost = iMotionConstants.localhost;
 
 var buffer;
 const bufferCapacity = 100;
@@ -162,6 +163,7 @@ var DEBUG_timer_in;
 
    _visualizeSim(): void {
 
+    //  this._stopSimulation();
      this.props.navigator.push({
        component: IMotionVisualComponent,
        translucent: true,
@@ -170,6 +172,7 @@ var DEBUG_timer_in;
 
    _enhanceReality(): void {
 
+    //  this._stopSimulation();
      this.props.navigator.push({
        component: IMotionARComponent,
        translucent: true,

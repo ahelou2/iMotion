@@ -101,6 +101,7 @@ export default class IMotionARComponent extends Component {
 renderARView(parentHeight, parentWidth) {
 
   // var absoluteUri = "http://" + localhost + ":3000/visualizeMobile.html";
+  // var absoluteUri = "http://" + localhost + ":3000/ARDemoStaticCamera.html";
   var absoluteUri = "http://" + localhost + ":3000/ARDemo.html";
 
   return (
@@ -118,6 +119,8 @@ renderARView(parentHeight, parentWidth) {
 
 
 }
+
+
 
 
 
