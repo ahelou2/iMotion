@@ -79,25 +79,6 @@ export default class IMotionARComponent extends Component {
     );
   }
 
-//   renderARView(parentHeight, parentWidth) {
-//     var absoluteUri = "http://" + localhost + ":3000/visualize.html";
-//     return (
-//
-//     <View style={{width: parentWidth,
-//     height: parentHeight, position: 'absolute',
-//     backgroundColor: 'transparent',
-// }}>
-//           <WebView
-//             source={{uri: absoluteUri}}
-//             scrollEnabled={false}
-//             />
-//           </View>
-//
-//     );
-//
-//
-//   }
-
 renderARView(parentHeight, parentWidth) {
 
   // var absoluteUri = "http://" + localhost + ":3000/visualizeMobile.html";
