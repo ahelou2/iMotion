@@ -24,30 +24,6 @@ import _ from 'lodash';
 
 import {CameraKitCamera} from 'react-native-camera-kit';
 
-const FLASH_MODE_AUTO = 'auto';
-const FLASH_MODE_ON = 'on';
-const FLASH_MODE_OFF = 'off';
-
-const OVERLAY_DEFAULT_COLOR = '#00000077';
-
-const flashAutoImage = require('./images/flashAuto.png');
-const flashOnImage = require('./images/flashOn.png');
-const flashOffImage = require('./images/flashOff.png');
-const flashArray = [
-  {
-    mode: FLASH_MODE_AUTO,
-    image: flashAutoImage
-  },
-  {
-    mode: FLASH_MODE_ON,
-    image: flashOnImage
-  },
-  {
-    mode: FLASH_MODE_OFF,
-    image: flashOffImage
-  }
-];
-
 const WebView = require('WebView');
 const resolveAssetSource = require('resolveAssetSource');
 const iMotionConstants = require('iMotionConstants');
@@ -58,10 +34,6 @@ export default class IMotionARComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {parentHeight: 0, parentWidth: 0};
-  }
-
-  renderCamera2() {
-
   }
 
   renderCamera(parentHeight, parentWidth) {

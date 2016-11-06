@@ -90,6 +90,10 @@ RCT_EXPORT_METHOD(getCurrentMotion:(RCTPromiseResolveBlock)resolve
     double pitch = attitude.pitch;
     double roll = attitude.roll;
     NSDictionary *eulerAngles = @{@"yaw": @(yaw), @"pitch": @(pitch), @"roll": @(roll)} ;
+    
+    CMQuaternion q = attitude.quaternion;
+    NSDictionary *quaternion = @{@"x": @(q.x), @"y": @(q.y), @"z": @(q.z), @"w": @(q.w)} ;
+
 
     double yawRate = _motionManager.deviceMotion.rotationRate.x;
     double pitchRate = _motionManager.deviceMotion.rotationRate.y;
@@ -103,7 +107,8 @@ RCT_EXPORT_METHOD(getCurrentMotion:(RCTPromiseResolveBlock)resolve
         @"gravityAcceleration": gravityAcc,
           @"linearRotationMatrix": linearRotationMatrix,
             @"eulerAngles": eulerAngles,
-              @"rotationRate": rotationRate} ;
+              @"quaternion": quaternion,
+                @"rotationRate": rotationRate} ;
 
     resolve(deviceMoton);
   }
