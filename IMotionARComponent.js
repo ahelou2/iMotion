@@ -64,6 +64,12 @@ export default class IMotionARComponent extends Component {
     );
   }
 
+postMessage = () => {
+  if (this.webview) {
+    this.webview.postMessage = ('"Hello" from React Native!');
+  }
+}
+
 renderARView(parentHeight, parentWidth) {
 
   // var absoluteUri = "http://" + localhost + ":3000/visualizeMobile.html";
@@ -73,6 +79,7 @@ renderARView(parentHeight, parentWidth) {
   return (
 
         <WebView
+          ref={webview => { this.webview = webview; }}
           source={{uri: absoluteUri}}
           scrollEnabled={false}
           style={{width: parentWidth,

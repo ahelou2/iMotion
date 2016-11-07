@@ -5,7 +5,7 @@
  */
 
  const Motion = require('Motion');
-  const React = require('react');
+ const React = require('react');
 
   const iMotionConstants = require('iMotionConstants');
   const localhost = iMotionConstants.localhost;
@@ -16,7 +16,7 @@
  var motionManagerNeedsRestarting = false;
 
  var buffer;
- const bufferCapacity = 20;
+ const bufferCapacity = 5;
 
  var DEBUG_timer_in;
 
