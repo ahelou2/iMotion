@@ -84,7 +84,7 @@ renderARView(parentHeight, parentWidth) {
           scrollEnabled={false}
           style={{width: parentWidth,
           height: parentHeight, position: 'absolute',
-          // backgroundColor: 'transparent',
+          backgroundColor: 'transparent',
         }}
           />
 
