@@ -29,11 +29,24 @@ const resolveAssetSource = require('resolveAssetSource');
 const iMotionConstants = require('iMotionConstants');
 const localhost = iMotionConstants.localhost;
 
+const motionManager = require('IMotionManager');
+
 export default class IMotionARComponent extends Component {
 
   constructor(props) {
     super(props);
     this.state = {parentHeight: 0, parentWidth: 0};
+
+    // motionManager.autoReadMotionData(true);
+  }
+
+  componentDidMount() {
+    motionManager.startMotionManager();
+    motionManager.autoReadMotionData(true);
+  }
+
+  componentWillUnmount() {
+    motionManager.stopMotionManager();
   }
 
   renderCamera(parentHeight, parentWidth) {
@@ -64,7 +77,7 @@ renderARView(parentHeight, parentWidth) {
           scrollEnabled={false}
           style={{width: parentWidth,
           height: parentHeight, position: 'absolute',
-          backgroundColor: 'transparent',
+          // backgroundColor: 'transparent',
         }}
           />
 

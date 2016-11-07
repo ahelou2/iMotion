@@ -86,10 +86,10 @@ RCT_EXPORT_METHOD(getCurrentMotion:(RCTPromiseResolveBlock)resolve
       @(r.m21), @(r.m22), @(r.m23),
       @(r.m31), @(r.m32), @(r.m33)];
 
-    double yaw = attitude.yaw;
     double pitch = attitude.pitch;
+    double yaw = attitude.yaw;
     double roll = attitude.roll;
-    NSDictionary *eulerAngles = @{@"yaw": @(yaw), @"pitch": @(pitch), @"roll": @(roll)} ;
+    NSDictionary *eulerAngles = @{@"pitch": @(pitch), @"roll": @(roll), @"yaw": @(yaw)} ;
     
     CMQuaternion q = attitude.quaternion;
     NSDictionary *quaternion = @{@"x": @(q.x), @"y": @(q.y), @"z": @(q.z), @"w": @(q.w)} ;

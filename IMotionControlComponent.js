@@ -163,7 +163,7 @@ var DEBUG_timer_in;
 
    _visualizeSim(): void {
 
-    //  this._stopSimulation();
+     this._stopSimulation();
      this.props.navigator.push({
        component: IMotionVisualComponent,
        translucent: true,
@@ -172,7 +172,7 @@ var DEBUG_timer_in;
 
    _enhanceReality(): void {
 
-    //  this._stopSimulation();
+     this._stopSimulation();
      this.props.navigator.push({
        component: IMotionARComponent,
        translucent: true,
@@ -193,7 +193,7 @@ var DEBUG_timer_in;
      if (buffer.writeIdx === buffer.capacity) {
        buffer.writeIdx = 0;
        payload = JSON.stringify(buffer.store);
-      //  fetch('http://192.168.1.73:3000/publishMotionData', {
+      
       let uri = "http://" + localhost + ":3000/publishMotionData";
         fetch(uri, {
          method: 'POST',

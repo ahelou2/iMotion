@@ -20,7 +20,7 @@ type MotionData = {
   timestamp: number,
   userAcceleration: {x: number, y: number, z: number},
   gravityAcceleration: {x: number, y: number, z: number},
-  eulerAngles: {yaw: number, pitch: number, roll: number},
+  eulerAngles: {pitch: number, roll: number, yaw: number},
   quaternion: {x: number, y: number, z: number, w: number},
   rotationRate: {yawRate: number, pitchRate: number, rollRate: number},
   linearRotationMatrix: {
