@@ -24,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		C545AAD21DB32B9F00E78832 /* RCTMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = C545AAD01DB32B9F00E78832 /* RCTMotion.m */; };
+		C555F1911DD760DA00636B28 /* libRNLocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C555F1901DD7601400636B28 /* libRNLocation.a */; };
 		C5EFB2B91DC2F6C1009FCC36 /* libReactNativeCameraKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5EFB2B81DC2F6B5009FCC36 /* libReactNativeCameraKit.a */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		C555F18F1DD7601400636B28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C555F1801DD7601400636B28 /* RNLocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNLocation;
+		};
 		C5EFB2B71DC2F6B5009FCC36 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C5EFB2A91DC2F6B5009FCC36 /* ReactNativeCameraKit.xcodeproj */;
@@ -138,6 +146,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		C545AAD01DB32B9F00E78832 /* RCTMotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTMotion.m; sourceTree = "<group>"; };
 		C545AAD11DB32B9F00E78832 /* RCTMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTMotion.h; sourceTree = "<group>"; };
+		C555F1801DD7601400636B28 /* RNLocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNLocation.xcodeproj; path = "../../Developer/react-native-location-beacons/ios/RNLocation.xcodeproj"; sourceTree = "<group>"; };
 		C5EFB2A91DC2F6B5009FCC36 /* ReactNativeCameraKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeCameraKit.xcodeproj; path = "../node_modules/react-native-camera-kit/ios/lib/ReactNativeCameraKit.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C555F1911DD760DA00636B28 /* libRNLocation.a in Frameworks */,
 				C5EFB2B91DC2F6C1009FCC36 /* libReactNativeCameraKit.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -279,6 +289,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C555F1801DD7601400636B28 /* RNLocation.xcodeproj */,
 				C5EFB2A91DC2F6B5009FCC36 /* ReactNativeCameraKit.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -319,6 +330,14 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* iMotion.app */,
 				00E356EE1AD99517003FC87E /* iMotionTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C555F1811DD7601400636B28 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C555F1901DD7601400636B28 /* libRNLocation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -445,6 +464,10 @@
 					ProductGroup = C5EFB2AA1DC2F6B5009FCC36 /* Products */;
 					ProjectRef = C5EFB2A91DC2F6B5009FCC36 /* ReactNativeCameraKit.xcodeproj */;
 				},
+				{
+					ProductGroup = C555F1811DD7601400636B28 /* Products */;
+					ProjectRef = C555F1801DD7601400636B28 /* RNLocation.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -523,6 +546,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C555F1901DD7601400636B28 /* libRNLocation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNLocation.a;
+			remoteRef = C555F18F1DD7601400636B28 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C5EFB2B81DC2F6B5009FCC36 /* libReactNativeCameraKit.a */ = {
@@ -623,7 +653,10 @@
 				INFOPLIST_FILE = iMotionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iMotion.app/iMotion";
@@ -638,7 +671,10 @@
 				INFOPLIST_FILE = iMotionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iMotion.app/iMotion";
@@ -656,6 +692,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-location",
 				);
 				INFOPLIST_FILE = iMotion/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -680,6 +717,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-location",
 				);
 				INFOPLIST_FILE = iMotion/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -737,6 +775,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-location",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -781,6 +820,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-location",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

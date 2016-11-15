@@ -17,6 +17,7 @@
  // const RNFS = require('react-native-fs');
  const util  = require('util');
  const WebView = require('WebView');
+ const ScrollView = require('ScrollView');
  const resolveAssetSource = require('resolveAssetSource');
 
  const iMD = require('iMotionDebugger');
@@ -25,6 +26,7 @@
  const iMotionConstants = require('iMotionConstants');
  const IMotionVisualComponent = require('IMotionVisualComponent');
  const IMotionARComponent = require('IMotionARComponent');
+ const IMotionLocationStatusReporting = require('IMotionLocationStatusReporting');
 
  const EventKey = iMotionConstants.EventKey;
  const GRAVITY_ACC = iMotionConstants.GRAVITY_ACC;
@@ -58,47 +60,63 @@ var DEBUG_timer_in;
    render() {
      const display = 'Distance from Origin:\n' + this.state.distanceText;
      return (
-       <View style={{top: 50}}>
-
-         <TouchableWithoutFeedback key={'start'} onPress={this._primeMotionSim.bind(this)}>
-           <View style={[styles.buttons, {backgroundColor: 'green'}]}>
-             <Text style={[styles.text]}>
-               Start Simulation
-             </Text>
-           </View>
-         </TouchableWithoutFeedback>
-
-         <TouchableWithoutFeedback key={'stop'} onPress={this._stopSimulation.bind(this)}>
-           <View style={[styles.buttons, {backgroundColor: 'red'}]}>
-             <Text style={[styles.text]}>
-               Stop Simulation
-             </Text>
-           </View>
-         </TouchableWithoutFeedback>
-
-         <TouchableWithoutFeedback key={'visualize'} onPress={this._visualizeSim.bind(this)}>
-           <View style={[styles.buttons, {backgroundColor: 'blue'}]}>
-             <Text style={[styles.text]}>
-               Visualize Simulation
-             </Text>
-           </View>
-         </TouchableWithoutFeedback>
+       <ScrollView automaticallyAdjustContentInsets={false}
+          style={[styles.scrollView]}>
+         <View style={{top: 50}}>
 
          <TouchableWithoutFeedback key={'AR'} onPress={this._enhanceReality.bind(this)}>
-           <View style={[styles.buttons, {backgroundColor: 'purple'}]}>
+           <View style={[styles.buttons, {backgroundColor: 'black'}]}>
              <Text style={[styles.text]}>
                Enhance Reality
              </Text>
            </View>
          </TouchableWithoutFeedback>
 
-         <View key={'display'} style={[styles.displayBox]}>
-           <Text style={[styles.text, {color: 'black'}]}>
-             {display}
-           </Text>
+         <TouchableWithoutFeedback key={'locationStatus'} onPress={this._locationStatus.bind(this)}>
+           <View style={[styles.buttons, {backgroundColor: 'black'}]}>
+             <Text style={[styles.text]}>
+               Location Status
+             </Text>
+           </View>
+         </TouchableWithoutFeedback>
+
+         <TouchableWithoutFeedback key={'visualize'} onPress={this._visualizeSim.bind(this)}>
+           <View style={[styles.buttons, {backgroundColor: 'black'}]}>
+             <Text style={[styles.text]}>
+               Visualize Simulation
+             </Text>
+           </View>
+         </TouchableWithoutFeedback>
+
+           <TouchableWithoutFeedback key={'start'} onPress={this._primeMotionSim.bind(this)}>
+             <View style={[styles.buttons, {backgroundColor: 'black'}]}>
+               <Text style={[styles.text]}>
+                 Start Simulation
+               </Text>
+             </View>
+           </TouchableWithoutFeedback>
+
+           <TouchableWithoutFeedback key={'stop'} onPress={this._stopSimulation.bind(this)}>
+             <View style={[styles.buttons, {backgroundColor: 'black'}]}>
+               <Text style={[styles.text]}>
+                 Stop Simulation
+               </Text>
+             </View>
+           </TouchableWithoutFeedback>
+
+
+
+
+
+           <View key={'display'} style={[styles.displayBox]}>
+             <Text style={[styles.text, {color: 'black'}]}>
+               {display}
+             </Text>
+           </View>
+
          </View>
 
-       </View>
+      </ScrollView>
      );
    }
 
@@ -179,6 +197,15 @@ var DEBUG_timer_in;
      });
    }
 
+   _locationStatus(): void {
+
+     this._stopSimulation();
+     this.props.navigator.push({
+       component: IMotionLocationStatusReporting,
+       translucent: true,
+     });
+   }
+
    _publishData(data): void {
 
      if (buffer == null) {
@@ -193,7 +220,7 @@ var DEBUG_timer_in;
      if (buffer.writeIdx === buffer.capacity) {
        buffer.writeIdx = 0;
        payload = JSON.stringify(buffer.store);
-      
+
       let uri = "http://" + localhost + ":3000/publishMotionData";
         fetch(uri, {
          method: 'POST',
@@ -304,6 +331,11 @@ var DEBUG_timer_in;
      fontSize: 20,
      color: 'white',
    },
+   scrollView: {
+    // backgroundColor: '#6A85B1',
+    // height: 300,
+    flex: 1,
+  },
  });
 
  module.exports = IMotionControlComponent;

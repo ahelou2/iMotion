@@ -10,7 +10,8 @@
     "js": "^0.1.0",
     "react": "15.3.2",
     "react-native": "0.35.0",
-    "react-native-camera-kit": "^3.0.4"
+    "react-native-camera-kit": "^3.0.4",
+    "react-native-location": "file:/Users/akram/Developer/react-native-location-beacons"
   },
   "jest": {
     "preset": "jest-react-native"

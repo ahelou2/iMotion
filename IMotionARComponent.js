@@ -30,6 +30,7 @@ const iMotionConstants = require('iMotionConstants');
 const localhost = iMotionConstants.localhost;
 
 const motionManager = require('IMotionManager');
+const RNLocation = (require('react-native-location')).RNLocation;
 
 export default class IMotionARComponent extends Component {
 
