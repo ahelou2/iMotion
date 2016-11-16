@@ -187,6 +187,7 @@ class IMotionLocationStatusReporting extends Component {
                     <Text style={{fontSize:12}}>
                       {"uuid: " + beacon.uuid + "\n"
                         + "major: " + beacon.major + " minor: " + beacon.minor + "\n"
+                        + "proximity: " + beacon.proximity + "\n"
                         + "accuracy: " + beacon.accuracy + " m " + " rssi: " + beacon.rssi}
                     </Text>
                   </View>
