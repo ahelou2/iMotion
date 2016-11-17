@@ -1,0 +1,1 @@
+/Users/akram/iMotion/node_modules/react-native-camera-kit/src/CameraKitCamera.ios.js

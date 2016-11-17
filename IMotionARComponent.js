@@ -53,7 +53,9 @@ export default class IMotionARComponent extends Component {
   renderCamera(parentHeight, parentWidth) {
     return (
         <CameraKitCamera
-          ref={(cam) => this.camera = cam}
+          ref={(cam) => {this.camera = cam; /*window.setInterval(this.postMessage.bind(this), 100);*/}}
+          focusMode='off'
+          zoomMode='off'
           style={{
         width: parentWidth,
         height: parentHeight,
@@ -65,9 +67,15 @@ export default class IMotionARComponent extends Component {
     );
   }
 
-postMessage = () => {
-  if (this.webview) {
-    this.webview.postMessage = ('"Hello" from React Native!');
+async postMessage() {
+  try {
+    if (this.camera) {
+      // this.webview.postMessage = ('Hello from React Native!');
+      let horizFieldOfView = await this.camera.horizontalFieldOfView();
+      console.log(horizFieldOfView);
+    }
+  } catch(e) {
+    console.log(e);
   }
 }
 

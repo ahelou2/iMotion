@@ -40,11 +40,21 @@ class IMotionLocationStatusReporting extends Component {
     Location.startRangingBeacons()
     Location.setDistanceFilter(5.0)
     DeviceEventEmitter.addListener('locationUpdated', (location) => {
-      this.setState({'location':location})
+      this.setState({'location':location});
     })
 
     DeviceEventEmitter.addListener('beaconsUpdated', (beaconz) => {
-      this.setState({'beacons':beaconz})
+      this.setState({'beacons':beaconz});
+    })
+  }
+
+  componentWillUnmount() {
+    DeviceEventEmitter.removeEventListener('locationUpdated', () => {
+      Location.stopUpdatingLocation();
+    })
+
+    DeviceEventEmitter.removeEventListener('beaconsUpdated', (beaconz) => {
+      Location.stopRangingBeaconsInRegion();
     })
   }
 
